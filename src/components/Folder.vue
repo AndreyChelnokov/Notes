@@ -8,6 +8,7 @@
       <img class="folder__icon" :src="svg">
       <input class="folder__link"
              @blur="sevaName"
+             @keydown.enter="sevaName"
              :disabled="isRename ? false : true"
              type="text"
              v-model="nameFolderText">
@@ -41,6 +42,8 @@ export default {
 
       this.$store.commit('setName', {oldName, newName})
       this.$store.commit('set_isRename', {name: newName, value: false});
+
+      this.$router.push('/' + newName)
     },
     menuFolder: function(e) {
       console.log(e)
@@ -79,6 +82,13 @@ export default {
 <style>
   .folder_a {
     display: flex;
+    display: flex;
+    align-items: center;
+    padding: 7px 10px;
+    border-radius: 4px;
+    background-color: rgba(225, 225, 225, .1);
+    margin-bottom: 3px;
+    font-size: 14px;
   }
   .folder input{
     background: transparent;
@@ -88,43 +98,8 @@ export default {
   .folder input:disabled {
     border: none;
   }
-  .folder {
-    display: flex;
-    align-items: center;
-    padding: 7px 10px;
-    border-radius: 4px;
-    background-color: rgba(225, 225, 225, .1);
-    margin-bottom: 3px;
-    font-size: 14px;
-  }
-  .folder:hover, .folder_active {
+  .folder_a:hover, .folder_active {
     background-color: rgba(225, 225, 225, .15);
-  }
-  .folder__btns {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    right: -100%;
-    top: 0;
-    transition: .5s;
-  }
-  .folder:hover .folder__btns {
-    right: calc(-100% + 57px);
-    transition: .5s;
-    cursor: pointer;
-  }
-  .folder__btn {
-    display: flex;
-    border-radius: 5px;
-    margin-right: 4px;
-    background: rgb(100 96 96);
-    width: 14px;
-    padding: 3px;
-    min-width: 22px;
-    align-items: center;
-    justify-content: center;
   }
   .folder__icon {
     width: 18px;
@@ -132,5 +107,8 @@ export default {
   }
   .folder__link {
     width:100%;
+  }
+  .folder__counter {
+    color: #746b6b;
   }
 </style>

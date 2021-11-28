@@ -2,7 +2,7 @@
   <div id="app" >
 
     <div class="wrap">
-      <Folders/>
+      <FoldersContainer/>
       <router-view/>
 
       <ContextMenu
@@ -20,6 +20,7 @@
 // @ is an alias to /src
 import Folders from '@/components/Folders.vue'
 import ContextMenu from '@/components/ContextMenu.vue'
+import FoldersContainer from "./components/FoldersContainer";
 
 export default {
   name: 'Home',
@@ -28,6 +29,7 @@ export default {
     }
   },
   components: {
+    FoldersContainer,
     Folders,
     ContextMenu
   },
@@ -63,5 +65,16 @@ export default {
   .files-wrap {
     display: flex;
     flex-grow: 1;
+  }
+
+
+  .note {
+    background: #181717 !important;
+    display: flex;
+    flex-grow: 1;
+    height: 100%;
+    min-height: 20px;
+    color: #fff;
+    padding: 10px;
   }
 </style>

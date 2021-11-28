@@ -6,8 +6,6 @@
         :length="folder.files.length"
         :idFolder="folder.id"
       />
-
-      <div @click="createFolder" class="create-filder">Создать папку</div>
     </div>
 </template>
 
@@ -19,16 +17,6 @@ export default {
   components: {
     Folder
   },
-  methods: {
-    createFolder: function() {
-      const data = {
-        name: 'Новая папка',
-        isRename: true,
-        files: []
-      }
-      this.$store.state.folders.push(data)
-    }
-  },
   computed: {
     listFolders: function() {
       return this.$store.state.folders;
@@ -36,11 +24,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  .folders {
-    min-width: 240px;
-    background: #383636;
-    padding: 10px 10px;
-  }
-</style>
