@@ -1,12 +1,11 @@
 <template>
   <div class="note">
-    <Files/>
-    {{getNote}}
+    <textarea v-model="getNote">
+    </textarea>
   </div>
 </template>
 
 <script>
-import Files from '@/components/Files.vue';
 
 export default {
   name: 'Note',
@@ -14,9 +13,6 @@ export default {
     return {
       listFolders: this.$store.state.folders
     }
-  },
-  components: {
-    Files
   },
   computed: {
     getNote: function() {
@@ -42,3 +38,26 @@ export default {
   }
 }
 </script>
+
+
+<style>
+.note {
+  background: #181717 !important;
+  display: flex;
+  flex-grow: 1;
+  height: 100%;
+  min-height: 20px;
+  color: #fff;
+  padding: 10px;
+}
+textarea{
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  color: #fff;
+  outline: none;
+  font-size: 14px;
+  font-family: sans-serif;
+}
+</style>

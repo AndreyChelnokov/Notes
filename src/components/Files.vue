@@ -1,10 +1,12 @@
 <template>
-  <div>
-    <div class="files">
-      <div v-for="file in getListFile" :key="file.name">
-        <router-link :to="'/' + $route.params.Folder + '/' + file.name">{{file.name}}</router-link>
-      </div>
-    </div>
+  <div class="files">
+    <router-link
+      v-for="file in getListFile"
+      :key="file.name" class="files__item"
+      :to="'/' + $route.params.Folder + '/' + file.name">
+      {{file.name}}
+    </router-link>
+
   </div>
 </template>
 
@@ -32,3 +34,23 @@ export default {
   }
 }
 </script>
+
+<style>
+  .files {
+    min-width: 310px;
+    background: #262323;
+    padding: 10px;
+  }
+  .files__item {
+    display: flex;
+    align-items: center;
+    padding: 13px 28px;
+    border-radius: 4px;
+    background-color: rgba(225, 225, 225, .1);
+    margin-bottom: 3px;
+    font-size: 14px;
+  }
+  .files__item:hover, .files__item_active {
+    background-color: rgba(225, 225, 225, .15);
+  }
+</style>
