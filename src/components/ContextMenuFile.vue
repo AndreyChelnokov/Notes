@@ -1,17 +1,15 @@
 <template>
   <div
     v-if="isMenu"
-    :name="elementName"
-    :elemType="elemType"
+    :name="folderName"
     class="ContextMenu"
     @click="closeFolderMenu"
     @contextmenu.prevent="closeFolderMenu"
   >
     <div class="ContextMenu__btns" :style="'left:' + left + 'px; top:' + top + 'px;'">
-      <div @click="renameElement" class="ContextMenu__btn">Переименовать папку</div>
+      <div @click="renameFolder" class="ContextMenu__btn">Переименовать папку</div>
       <div @click="deleteFolder" class="ContextMenu__btn">Удалить папку</div>
       <div @click="createFolder" class="ContextMenu__btn">Создать папку</div>
-      <div @click="createFile" class="ContextMenu__btn">Создать файл</div>
     </div>
   </div>
 </template>
@@ -28,28 +26,15 @@ export default {
     isMenu: Boolean,
     top: Number,
     left: Number,
-    elementName: String,
-    elemType: String
+    folderName: String
   },
   methods: {
-    renameElement: function() {
-      if (this.elemType == 'FILE') {
-        this.$store.commit('BOOLEAN_IS_RENAME_FILE', {
-          folderName: this.$route.params.Folder,
-          fileName: this.elementName,
-          value: true
-        });
-      } else if (this.elemType == 'FOLDER') {
-        this.$store.commit('BOOLEAN_IS_RENAME_FOLDER', {
-          name: this.elementName,
-          value: true
-        });
-      }
-
+    renameFolder: function() {
+      this.$store.commit('set_isRename', {name: this.folderName, value: true});
       this.closeContext();
     },
     deleteFolder: function() {
-      this.$store.commit('deleteFolder', this.elementName);
+      this.$store.commit('deleteFolder', this.folderName);
       this.closeContext();
     },
     createFolder: function() {
@@ -60,27 +45,13 @@ export default {
       }
       this.$store.state.folders.push(data)
     },
-    createFile: function() {
-      const file = {
-        name: 'Файл',
-        data: 'Это текст который в заметке',
-        isRenameFile: true
-      }
-      this.$store.state.folders.forEach(folderState => {
-        if (folderState.name == this.elementName) {
-          folderState.files.push(file)
-        }
-      })
-
-      this.closeContext();
-    },
     closeFolderMenu: function(e) {
       if (e.target.classList.contains('ContextMenu')) {
         this.closeContext();
       }
     },
     closeContext: function() {
-      this.$store.commit('BOOLEAN_IS_MENU', false);
+      this.$store.commit('set_isMenu', false);
     }
   }
 }

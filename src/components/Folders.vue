@@ -4,7 +4,6 @@
         v-for="folder in listFolders"
         :key="folder.name" :name="folder.name"
         :length="folder.files.length"
-        :idFolder="folder.id"
       />
     </div>
 </template>

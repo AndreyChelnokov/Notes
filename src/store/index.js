@@ -1,97 +1,134 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     folders: [
       {
         id: 1,
-        name: 'Gate31',
+        name: "Gate31",
         isRename: false,
         files: [
           {
-            name: 'Доступы',
-            data: 'Заметка в которой я хроню доступы'
-          }
-        ]
+            name: "Доступы",
+            isRenameFile: false,
+            data: "Это текст который в заметке",
+          },
+        ],
       },
       {
         id: 2,
-        name: 'Работа',
+        name: "Работа",
         isRename: false,
         files: [
           {
-            name: 'арпрара',
-            data: 'Это текст который в заметке'
+            name: "арпрара",
+            isRenameFile: false,
+            data: "Это текст который в заметке",
           },
           {
-            name: '323',
-            data: 'Это текст который в заметке'
+            name: "323",
+            isRenameFile: false,
+            data: "Это текст который в заметке",
           },
           {
-            name: '12w',
-            data: 'Это текст который в заметке'
+            name: "12w",
+            isRenameFile: false,
+            data: "Это текст который в заметке",
           },
-        ]
+        ],
       },
       {
         id: 3,
-        name: 'Доступы',
+        name: "Доступы",
         isRename: false,
         files: [
           {
-            name: '2',
-            data: 'Это текст который в заметке'
+            name: "Name Folder 1",
+            isRenameFile: false,
+            data: "Это текст который в заметке",
           },
           {
-            name: '43',
-            data: 'Это текст который в заметке'
+            name: "Name Folder 2",
+            isRenameFile: false,
+            data: "Это текст который в заметке",
           },
           {
-            name: '12w',
-            data: 'Это текст который в заметке'
+            name: "Name Folder 3",
+            isRenameFile: false,
+            data: "Это текст который в заметке",
           },
-        ]
+        ],
       },
     ],
     folderContextMenu: {
       isMenu: false,
       top: 10,
       left: 10,
-      folderName: ''
-    }
+      contextElementName: "",
+      elemType: "",
+    },
   },
   mutations: {
-    set_isMenu: (state, value) => {
+    RE_ELEM_TYPE: (state, value) => {
+      state.folderContextMenu.elemType = value;
+    },
+    BOOLEAN_IS_MENU: (state, value) => {
       state.folderContextMenu.isMenu = value;
     },
-    set_isRename: (state, opts) => {
-      state.folders.forEach(folder => {
+    BOOLEAN_IS_RENAME_FILE: (state, opts) => {
+      // Находим папку
+      let thisFolder;
+      state.folders.forEach((folder) => {
+        if (folder.name == opts.folderName) {
+          thisFolder = folder;
+        }
+      });
+      thisFolder.files.forEach((file) => {
+        if (file.name == opts.fileName) {
+          file.isRenameFile = opts.value;
+        }
+      });
+    },
+    SET_FILE_NAME: (state, opts) => {
+      // Находим папку
+      let thisFolder;
+      state.folders.forEach((folder) => {
+        if (folder.name == opts.folderName) {
+          thisFolder = folder;
+        }
+      });
+      thisFolder.files.forEach((file) => {
+        if (file.name == opts.oldName) {
+          file.name = opts.newName;
+        }
+      });
+    },
+    BOOLEAN_IS_RENAME_FOLDER: (state, opts) => {
+      state.folders.forEach((folder) => {
         if (folder.name == opts.name) {
           folder.isRename = opts.value;
         }
-      })
+      });
     },
     setName: (state, opts) => {
-      state.folders.forEach(folder => {
+      state.folders.forEach((folder) => {
         if (folder.name == opts.oldName) {
           folder.name = opts.newName;
-
-          console.log(folder.name)
         }
-      })
+      });
     },
     deleteFolder: (state, name) => {
       state.folders.forEach((folder, i) => {
         if (folder.name == name) {
           state.folders.splice(i, 1);
         }
-      })
+      });
     },
-    set_folderNameContextMenu: (state, value) => {
-      state.folderContextMenu.folderName = value;
+    RE_CONTEXT_ELEMENT_NAME: (state, value) => {
+      state.folderContextMenu.contextElementName = value;
     },
     set_left: (state, value) => {
       state.folderContextMenu.left = value;
@@ -103,5 +140,5 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-  }
+  },
 })

@@ -1,16 +1,16 @@
 <template>
   <div class="files">
-    <router-link
+    <File
       v-for="file in getListFile"
-      :key="file.name" class="files__item"
-      :to="'/' + $route.params.Folder + '/' + file.name">
-      {{file.name}}
-    </router-link>
-
+      :key="file.name"
+      :folderName="$route.params.Folder"
+      :fileName="file.name"
+    />
   </div>
 </template>
 
 <script>
+import File from '@/components/File.vue'
 export default {
   name: "Files",
   data() {
@@ -31,6 +31,9 @@ export default {
 
       return a
     }
+  },
+  components: {
+    File
   }
 }
 </script>

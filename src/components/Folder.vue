@@ -2,7 +2,6 @@
   <div class="folder" @contextmenu.prevent="menuFolder">
     <router-link
       :name="name"
-      :idFolder="idFolder"
       :to="'/' + name"
       class="folder_a">
       <img class="folder__icon" :src="svg">
@@ -41,20 +40,21 @@ export default {
       let newName = this.nameFolderText;
 
       this.$store.commit('setName', {oldName, newName})
-      this.$store.commit('set_isRename', {name: newName, value: false});
+      this.$store.commit('BOOLEAN_IS_RENAME_FOLDER', {name: newName, value: false});
 
       this.$router.push('/' + newName)
     },
     menuFolder: function(e) {
-      console.log(e)
       e.path.forEach(pathItem => {
 
         if (pathItem._prevClass == 'folder') {
           const nodeFolder = pathItem.firstChild.parentNode;
           const nameFolder = nodeFolder.querySelector('[name]').getAttribute('name');
 
-          this.$store.commit('set_isMenu', true);
-          this.$store.commit('set_folderNameContextMenu', nameFolder);
+          this.$store.commit('BOOLEAN_IS_MENU', true);
+          this.$store.commit('RE_CONTEXT_ELEMENT_NAME', nameFolder);
+          this.$store.commit('RE_ELEM_TYPE', 'FOLDER')
+
           this.$store.commit('set_left', e.clientX);
           this.$store.commit('set_top', e.clientY);
 
@@ -94,6 +94,8 @@ export default {
     background: transparent;
     color: #fff;
     font-size: 14px;
+    margin-right: 10px;
+    border-radius: 5px;
   }
   .folder input:disabled {
     border: none;

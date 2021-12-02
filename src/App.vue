@@ -9,8 +9,8 @@
         :isMenu="isContextMenu"
         :left="left"
         :top="top"
-        :folderName="folderNameContextMenu"
-        :idFolder="idFolder"
+        :elementName="contextElementName"
+        :elemType="elemType"
       />
     </div>
   </div>
@@ -18,7 +18,6 @@
 
 <script>
 // @ is an alias to /src
-import Folders from '@/components/Folders.vue'
 import ContextMenu from '@/components/ContextMenu.vue'
 import FoldersContainer from "./components/FoldersContainer";
 
@@ -30,15 +29,14 @@ export default {
   },
   components: {
     FoldersContainer,
-    Folders,
     ContextMenu
   },
   computed: {
     isContextMenu: function() { return this.$store.state.folderContextMenu.isMenu },
     top: function() { return this.$store.state.folderContextMenu.top },
     left: function() { return this.$store.state.folderContextMenu.left },
-    folderNameContextMenu: function() { return this.$store.state.folderContextMenu.folderName },
-    idFolder: function() { return this.$store.state.folderContextMenu.idFolder },
+    contextElementName: function() { return this.$store.state.folderContextMenu.contextElementName },
+    elemType: function() { return this.$store.state.folderContextMenu.elemType }
   }
 }
 </script>
